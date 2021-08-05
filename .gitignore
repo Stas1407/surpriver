@@ -1,5 +1,6 @@
 __pycache__/
 docker-compose.yml
 dictionaries/*
+stocks/*
 !dictionaries/readme.txt
 !dictionaries/sample_dict.npy
