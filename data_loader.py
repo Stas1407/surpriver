@@ -12,8 +12,7 @@ from binance.client import Client
 warnings.filterwarnings("ignore")
 
 class DataEngine:
-	def __init__(self, history_to_use, data_granularity_minutes, is_save_dict, is_load_dict, dict_path, min_volume_filter, is_test, future_bars_for_testing, volatility_filter, stocks_list, data_source):
-		print("Data engine has been initialized...")
+	def __init__(self, history_to_use, data_granularity_minutes, is_save_dict, is_load_dict, dict_path, min_volume_filter, is_test, future_bars_for_testing, volatility_filter, stocks_list, data_source, logger_queue):
 		self.DATA_GRANULARITY_MINUTES = data_granularity_minutes
 		self.IS_SAVE_DICT = is_save_dict
 		self.IS_LOAD_DICT = is_load_dict
@@ -23,6 +22,8 @@ class DataEngine:
 		self.IS_TEST = is_test
 		self.VOLATILITY_THRESHOLD = volatility_filter
 		self.DATA_SOURCE = data_source
+
+		self._logger_queue = logger_queue
 
 		# Stocks list
 		self.directory_path = str(os.path.dirname(os.path.abspath(__file__)))
@@ -48,13 +49,12 @@ class DataEngine:
 		"""
 		Load stock names from the file
 		"""
-		print("Loading all stocks from file...")
 		stocks_list = open(self.stocks_file_path, "r").readlines()
 		stocks_list = [str(item).strip("\n") for item in stocks_list]
 
 		# Load symbols
 		stocks_list = list(sorted(set(stocks_list)))
-		print("Total number of stocks: %d" % len(stocks_list))
+		self._logger_queue.put(["INFO", " Surpriver: Total number of stocks: %d" % len(stocks_list)])
 		self.stocks_list = stocks_list
 
 	def get_most_frequent_key(self, input_list):
@@ -149,7 +149,6 @@ class DataEngine:
 		Iterates over all symbols and collects their data
 		"""
 
-		print("Loading data for all stocks...")
 		features = []
 		symbol_names = []
 		historical_price_info = []
@@ -203,7 +202,6 @@ class DataEngine:
 
 	def load_data_from_dictionary(self):
 		# Load data from dictionary
-		print("Loading data from dictionary")
 		dictionary_data = np.load(self.DICT_PATH, allow_pickle = True).item()
 		
 		features = []

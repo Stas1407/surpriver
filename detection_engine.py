@@ -9,8 +9,7 @@ warnings.filterwarnings("ignore")
 
 class Surpriver:
     def __init__(self, top_n, history_to_use, min_volume, data_dictionary_path, data_granularity_minutes,
-                 volatility_filter, stock_list, data_source):
-        print("Surpriver has been initialized...")
+                 output_format, volatility_filter, stock_list, data_source, logger_queue):
         self.TOP_PREDICTIONS_TO_PRINT = top_n
         self.HISTORY_TO_USE = history_to_use
         self.MINIMUM_VOLUME = min_volume
@@ -21,9 +20,12 @@ class Surpriver:
         self.IS_TEST = 0
         self.FUTURE_BARS_FOR_TESTING = 0
         self.VOLATILITY_FILTER = volatility_filter
-        self.OUTPUT_FORMAT = "CLI"
+        self.OUTPUT_FORMAT = output_format
         self.STOCK_LIST = stock_list
         self.DATA_SOURCE = data_source
+        self._logger_queue = logger_queue
+
+        self._logger_queue.put(["DEBUG", f" Surpriver: Surpriver has been initialized"])
 
         # Create data engine
         self.dataEngine = DataEngine(self.HISTORY_TO_USE, self.DATA_GRANULARITY_MINUTES,
@@ -32,7 +34,7 @@ class Surpriver:
                                      self.IS_TEST, self.FUTURE_BARS_FOR_TESTING,
                                      self.VOLATILITY_FILTER,
                                      self.STOCK_LIST,
-                                     self.DATA_SOURCE)
+                                     self.DATA_SOURCE, self._logger_queue)
 
     def parse_large_values(self, value):
         if value < 1000:

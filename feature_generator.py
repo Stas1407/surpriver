@@ -21,7 +21,6 @@ warnings.filterwarnings("ignore")
 
 class TAEngine:
 	def __init__(self, history_to_use):
-		print("Technical Indicator Engine has been initialized")
 		self.HISTORY_TO_USE = history_to_use
 
 	def calculate_slope(self, data):
