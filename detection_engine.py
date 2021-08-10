@@ -127,6 +127,6 @@ class Surpriver:
                      today_volume, average_vol_last_five_days, average_vol_last_twenty_days,
                      volatility_vol_last_five_days, volatility_vol_last_twenty_days))
 
-            results.append(symbol)
+            results.append([symbol, prediction])
 
         return results
