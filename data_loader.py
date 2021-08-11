@@ -223,7 +223,7 @@ class DataEngine:
 			future_price_info.append(future_prices)
 
 		# Sometimes, there are some errors in feature generation or price extraction, let us remove that stuff
-		features, historical_price_info, future_price_info, symbol_names = self.remove_bad_data(features, historical_price_info, future_price_info, symbol_names)
+		# features, historical_price_info, future_price_info, symbol_names = self.remove_bad_data(features, historical_price_info, future_price_info, symbol_names)
 
 		return features, historical_price_info, future_price_info, symbol_names
 
