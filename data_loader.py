@@ -27,7 +27,7 @@ class DataEngine:
 
 		# Stocks list
 		self.directory_path = str(os.path.dirname(os.path.abspath(__file__)))
-		self.stocks_file_path = self.directory_path + f"/stocks/{stocks_list}"
+		self.stocks_file_path = stocks_list
 		self.stocks_list = []
 
 		# Load stock names in a list
